@@ -29,8 +29,120 @@
 
     .userInfo{
         height: 100%;
+        flex-grow: 1;
+        padding: 0px 15px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        line-height: 1.2rem;
+
+        .userName {
+            color: #638BFA;
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        .userDescription {
+            color: grey;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+    }
+
+    .editIcon {
+        padding: 1px;
+    }
+
+}
+
+.searchBar {
+    margin: 0px 20px;
+    margin-bottom: 20PX;
+    padding: 10px 15px;
+    border-radius: 25px;
+    background-color: white;
+    color: #c1bfbf;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    i{
+        font-size: 18px;
+    }
+
+    input {
+        height: 100%;
+        border: none;
+        padding: 0px 10px;
+        font-size: 15px;
+        font-weight: bold;
+        color: #c1bfbf;
+        outline: none;
+    }
+
+    input::placeholder {
+        color: #c1bfbf;
     }
 }
+
+.userItem{
+    height: 80px;
+    display: flex;
+    // align-items: center;
+    padding: 20px;
+
+    .userImage {
+        display: flex;
+        align-items: center;
+        img {
+            width: 55px;
+            height: 55px;
+        }
+    }
+
+    .userInfo{
+        height: 100%;
+        flex-grow: 1;
+        padding: 0px 15px;
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        line-height: 1.2rem;
+
+        .userName {
+            color: #638BFA;
+            font-weight: bolder;
+            font-size: 15px;
+        }
+
+        .userDescription {
+            color: grey;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+    }
+
+    .editIcon {
+        font-size: 10px;
+        // padding: 1px;
+    }
+
+}
+
+.userItem:hover{
+    background-color: #c5d2f7;
+}
+
+.quickChatLogo{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color:#638BFA;
+}
+

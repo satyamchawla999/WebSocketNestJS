@@ -26,4 +26,12 @@ export class MyGateway {
       content: body
     })
   }
+
+  @SubscribeMessage("newUser")
+  onNewUser(@MessageBody() body: any){
+    console.log("new user",body)
+    this.server.emit('onNewUser',{
+      user: body
+    })
+  }
 }

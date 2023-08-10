@@ -1,0 +1,64 @@
+.signin,.signup {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-image: linear-gradient(#5C72EC,#32ACDD);
+    font-family: "Helvetica Neue", "Arial", "Noto Sans", "sans-serif";
+}
+
+.formSection {
+    width: 20%;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 40px 40px;
+
+    h1{
+        padding-bottom: 40px;
+    }
+
+    .inputForm {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        
+
+        input {
+            width: 100%;
+            height: 3rem;
+            padding: 10px;
+            border: 1px solid lightgrey;
+            background-color: none;
+            color: grey;
+            margin-bottom: 20px;
+        }
+
+        button {
+            cursor: pointer;
+            height: 3rem;
+            color: white;
+            background-color: #478EE6;
+            border: none;
+            margin-bottom: 20px;
+        }
+    }
+
+    p{
+        color: grey;
+
+        .link {
+            color: #478EE6;
+            text-decoration: none;
+        }
+    }
+}
