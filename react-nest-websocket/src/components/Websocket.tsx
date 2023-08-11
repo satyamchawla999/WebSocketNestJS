@@ -11,28 +11,29 @@ const Websocket: FC = () => {
     const [value, setValue] = useState('');
     const [message, setMessage] = useState<messagePyload[]>([]);
 
-    useEffect(() => {
-        socket.on('connect', () => {
-            console.log('Connected');
-        })
+    // useEffect(() => {
+    //     socket.on('connect', () => {
+    //         console.log('Connected');
+    //     })
 
-        socket.on('onMessage', (newMessage: messagePyload) => {
-            console.log('onMessage event received!');
-            console.log(newMessage);
-            setMessage((prev) => [...prev, newMessage]);
-        });
+    //     socket.on('onMessage', (newMessage: messagePyload) => {
+    //         console.log('onMessage event received!');
+    //         console.log(newMessage);
+    //         setMessage((prev) => [...prev, newMessage]);
+    //     });
 
-        return () => {
-            console.log('Unregistering Events...');
-            socket.off('connect');
-            socket.off('onMessage');
-        }
-    }, [])
+    //     return () => {
+    //         console.log('Unregistering Events...');
+    //         socket.off('connect');
+    //         socket.off('onMessage');
+    //     }
+    // }, [])
 
     const handleSubmit = () => {
-        socket.emit('newMessage', value);
-        setValue('');
+        // socket.emit('newMessage', value);
+        // setValue('');
     }
+    
     return (
         <div>
             <h1>Websocket componenet</h1>

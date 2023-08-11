@@ -7,8 +7,8 @@ export class SocketClient implements OnModuleInit {
 
     constructor() {
         this.socketClient = io('http://localhost:3001');
-    
     }
+    
     onModuleInit() {
         this.registerConsumerEvents()
     }

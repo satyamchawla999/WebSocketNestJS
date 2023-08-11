@@ -7,7 +7,7 @@ import { Server } from "socket.io"
   }
 })
 export class MyGateway {
-
+  
   @WebSocketServer()
   server: Server
 
@@ -32,6 +32,16 @@ export class MyGateway {
     console.log("new user",body)
     this.server.emit('onNewUser',{
       user: body
+    })
+  }
+
+  @SubscribeMessage('newChatRoom')
+  onNewRoom(@MessageBody() body: any){
+    console.log('hello hello hello')
+    const SubscribeChatRoom = `${body.chatRoomID}SUBSCRIBE`
+    this.server.emit(SubscribeChatRoom,{
+      msg:'new message',
+      content: body.value
     })
   }
 }

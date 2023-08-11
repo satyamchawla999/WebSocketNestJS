@@ -6,14 +6,13 @@ import { store, persistor } from './app/store'
 import Main from './Main';
 import "./assets/styles/index.scss"
 import {PersistGate} from "redux-persist/integration/react";
-import {persistStore} from "redux-persist";
 import { WebsocketProvider, socket } from './context/WebsocketContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <WebsocketProvider value={socket}>
@@ -21,7 +20,7 @@ root.render(
         </WebsocketProvider>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 

@@ -1,21 +1,120 @@
-.chatPage {    
-   display: flex;
-   flex-direction: row;
+.chatPage {
+    display: flex;
+    flex-direction: row;
 
-   .users {
-    width: 25%;
-    height: 100vh;
-    background-color: #F7F7F8;
-   }
+    .users {
+        width: 25%;
+        height: 100vh;
+        background-color: #F7F7F8;
+    }
 
-   .chatRoom {
-    width: 75%;
-    height: 100vh;
-    background-color: white;
-   }
+    .chatRoom {
+        width: 75%;
+        height: 100vh;
+        background-color: white;
+        padding: 10px 20px;
+
+        display: flex;
+        flex-direction: column;
+
+        .chatRoomHeader {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            // border-bottom: 1px solid #c1bfbf;
+
+            .info {
+                display: flex;
+                align-items: center;
+                flex-grow: 2;
+
+                img {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    // border: 1px solid #c1bfbf;
+                    margin-right: 15px;
+                }
+
+                p {
+                    color: black;
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+            }
+
+            .icons{
+                font-size: 25px;
+                color: #c1bfbf;
+
+                i {
+                    margin-right: 15px;
+                }
+            }
+        }
+
+        .messageBox{
+            width: 100%;
+            flex-grow: 1;
+            border-top: 1px solid #c1bfbf;
+            border-bottom: 1px solid #c1bfbf;
+            margin-bottom: 10px;
+
+            .noMessage{
+                width: 100%;
+                text-align: center;
+                color: #b5b3b3;
+            }
+        }
+
+        .inputBar{
+            margin: 10px 0px;
+            width: 100%;
+            height: 5%;
+            display: flex;
+            align-items: center;
+            background-color: #F7F7F8;
+            padding-left: 20px;
+            border-radius: 20px ;
+
+            input {
+                padding: 10px;
+                height: 100%;
+                font-size: 18px;
+                flex-grow: 1;
+                color: #c1bfbf;
+                background-color: #F7F7F8;
+                font-weight: bold;
+                border: transparent;
+                outline: transparent;
+            }
+
+            input::placeholder {
+                color: #c1bfbf;
+            }
+
+        
+            i {
+                font-size: 25px;
+                color: #c1bfbf;
+                font-weight: light;
+                margin: 5px;
+            }
+
+            button {
+                background-color: #638BFA;
+                color:white;
+                border: none;
+                border-radius: 50%;
+                padding: 6px;
+            }
+
+        }
+    }
 }
 
-.userProfileSection{
+.userProfileSection {
     height: 12%;
     display: flex;
     padding: 20px;
@@ -27,7 +126,7 @@
         }
     }
 
-    .userInfo{
+    .userInfo {
         height: 100%;
         flex-grow: 1;
         padding: 0px 15px;
@@ -47,7 +146,7 @@
             font-size: 12px;
             font-weight: bold;
         }
-        
+
     }
 
     .editIcon {
@@ -62,32 +161,33 @@
     padding: 10px 15px;
     border-radius: 25px;
     background-color: white;
-    color: #c1bfbf;
+    // color: #b5b3b3;
 
     display: flex;
     flex-direction: row;
     align-items: center;
 
-    i{
+    i {
         font-size: 18px;
     }
 
     input {
+        flex-grow: 1;
         height: 100%;
         border: none;
         padding: 0px 10px;
         font-size: 15px;
         font-weight: bold;
-        color: #c1bfbf;
+        color: #b5b3b3;
         outline: none;
     }
 
     input::placeholder {
-        color: #c1bfbf;
+        color: #b5b3b3;
     }
 }
 
-.userItem{
+.userItem {
     height: 80px;
     display: flex;
     // align-items: center;
@@ -96,13 +196,14 @@
     .userImage {
         display: flex;
         align-items: center;
+
         img {
             width: 55px;
             height: 55px;
         }
     }
 
-    .userInfo{
+    .userInfo {
         height: 100%;
         flex-grow: 1;
         padding: 0px 15px;
@@ -122,7 +223,7 @@
             font-size: 10px;
             font-weight: bold;
         }
-        
+
     }
 
     .editIcon {
@@ -132,17 +233,25 @@
 
 }
 
-.userItem:hover{
+.userItem:hover {
     background-color: #c5d2f7;
 }
 
-.quickChatLogo{
+.selected {
+    background-color: lightgrey;
+}
+
+.quickChatLogo {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color:#638BFA;
-}
+    color: #638BFA;
 
+    img {
+        width: 70%;
+        height: 55%;
+    }
+}

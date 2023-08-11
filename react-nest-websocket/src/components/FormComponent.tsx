@@ -12,7 +12,7 @@ interface data {
 
 const FormComponent: FC<data> = (props) => {
   const { page } = props
-  const socket = useContext(WebsocketContext);
+  // const socket = useContext(WebsocketContext);
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -32,12 +32,11 @@ const FormComponent: FC<data> = (props) => {
 
     if(password === confirmPassword) {
       void dispatch(addUser({ name, email, password })).unwrap().then((result) => {
-        console.log(result)
         if (result === undefined) {
           console.log('User Already Present')
         } else {
           console.log('sign up successfull!!')
-          socket.emit('newUser',result);
+          // socket.emit('newUser',result);
           navigate('/signin')
         }
       })

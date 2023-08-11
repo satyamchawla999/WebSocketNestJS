@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { addNewUser, currentUserSelector, userSelector, User } from '../features/users/usersSlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { WebsocketContext } from '../context/WebsocketContext'
@@ -10,37 +10,57 @@ import UserItem from './UserItem'
 // }
 
 interface propsData {
-  openChatRoom: (id: string | undefined) => void
+  openChatRoom: (recipientData: { id: string, name: string }) => void
 }
 
 const UsersComponent: React.FC<propsData> = (props) => {
 
-  const dispatch = useAppDispatch()
   const users: User[] | undefined = useAppSelector(userSelector)
   const currentUser = useAppSelector(currentUserSelector)
   const currentUserID = currentUser?._id
-  const socket = useContext(WebsocketContext);
+  const [select, setSelect] = useState<string>('');
 
   const { openChatRoom } = props
 
-
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Connected');
-    })
-
-    socket.on('onNewUser', (newUser: any) => {
-      console.log('onNewUser event received!');
-      console.log("frontend", newUser);
-      dispatch(addNewUser(newUser.user))
-    });
-
+    setSelect('')
+    console.log('hello')
     return () => {
-      console.log('Unregistering Events...');
-      socket.off('connect');
-      socket.off('onNewUser');
+      setSelect('')
     }
   }, [])
+
+  const handleClick = (id:string|undefined, name:string|undefined) => {
+    if(id && name) {
+        const recipientData = {
+            id: id,
+            name: name
+        }
+        openChatRoom(recipientData)
+        setSelect(id)
+    }
+
+    
+}
+
+
+  // useEffect(() => {
+  //   socket.on('connect', () => {
+  //     console.log('Connected');
+  //   })
+
+  //   socket.on('onNewUser', (newUser: any) => {
+  //     console.log('onNewUser event received!');
+  //     console.log("frontend", newUser);
+  //     dispatch(addNewUser(newUser.user))
+  //   });
+
+  //   return () => {
+  //     console.log('Unregistering Events...');
+  //     socket.off('connect');
+  //     socket.off('onNewUser');
+  //   }
+  // }, [])
 
   return (
     <div className='users'>
@@ -70,8 +90,11 @@ const UsersComponent: React.FC<propsData> = (props) => {
         {
           (currentUserID !== undefined || users !== undefined) && (
             users.length === 0 ? <p> No Users! </p> :
-              users.map((user, index) => user._id !== currentUserID && <UserItem key={index} user={user} openChatRoom={openChatRoom} />)
-          )
+              users.map((user, index) => user._id !== currentUserID &&
+                <div className={select === user._id ? 'selected' : ''} onClick={() => handleClick(user._id,user.name)} >
+                  <UserItem select={select} setSelect={setSelect} key={index} user={user}  />
+                </div>
+              ))
         }
       </div>
 

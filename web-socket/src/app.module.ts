@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { secret } from './constant';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { secret } from './constant';
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ChatApplication'),
     GatewayModule,
     AuthModule,
-    UserModule],
+    UserModule,
+    ChatModule],
   controllers: [AppController],
   providers: [AppService],
 })
