@@ -1,27 +1,32 @@
-import { Body, Controller, Post, OnModuleInit } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { ChatService } from './chat.service';
-
-// import { io, Socket } from "socket.io-client";
-import { MyGateway } from 'src/gateway/gateway';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Controller('chat')
-export class ChatController  {
+export class ChatController {
 
   // // public socketClient: Socket
   // constructor(private readonly chatService: ChatService, private readonly gateway: MyGateway) {
   //   // this.socketClient = io('http://localhost:3001');
   // }
 
+  constructor(private readonly chatService: ChatService, @Inject(CACHE_MANAGER) private cacheManager: Cache) { }
+
   // onModuleInit() {
   //   this.registerConsumerEvents()
   // }
 
-  // @Post('createroom')
-  // createRoom(@Body() body: any): any {
-  //   console.log(body)
-  //   // const response = this.gateway.setChatRoomSocket(body.chatRoomID);
-  //   return body;
-  // }
+  @Post('createroom')
+  async createRoom(@Body() body: any): Promise<Array<object>> {
+    const { chatRoomID } = body
+    const chatRoom = await this.cacheManager.get(chatRoomID);
+    if (!chatRoom) {
+      return []
+    } else {
+      return  await this.cacheManager.get(chatRoomID);
+    }
+  }
 
   // private registerConsumerEvents() {
   //   // this.socketClient.emit('newMessage', { msg: 'hey there!' });

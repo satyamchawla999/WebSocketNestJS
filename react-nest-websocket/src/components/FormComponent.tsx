@@ -62,6 +62,15 @@ const FormComponent: FC<data> = (props) => {
   
   }
 
+  const myFunction = () => {
+    var x:any = document.getElementById("passwordInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
   return (
     <div className="formSection">
 
@@ -71,7 +80,7 @@ const FormComponent: FC<data> = (props) => {
 
         {page === 'Sign up' && <input type="name" name="name" placeholder='Name' ref={nameRef} required />}
         <input type="email" name="email" placeholder='Email' ref={emailRef} required />
-        <input type="password" name="password" placeholder='Password' ref={passwordRef} required />
+        <input type="password" name="password" placeholder='Password' ref={passwordRef} id='passwordInput' required />
         {page === 'Sign up' && <input type="password" name="confirmPassword" placeholder='Confirm Password' ref={confirmPasswordRef} required />}
 
         {/* // eslint-disable-next-line @typescript-eslint/no-misused-promises */}

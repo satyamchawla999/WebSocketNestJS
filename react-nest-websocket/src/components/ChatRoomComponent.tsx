@@ -1,35 +1,40 @@
 import React, { FormEvent, useContext, useEffect, useState } from 'react'
 import { WebsocketContext } from '../context/WebsocketContext';
 
+type messageArray = {
+  value: string
+  recipientID: string
+  senderID: string
+}
 
 type messagePyload = {
-  content: string,
-  msg: string
+  messageArray: messageArray[]
 }
 
 interface chatRoomData {
-  v: any
   chatRoom: {
     recipientName?: string,
     recipientID?: string,
-    chatRoomID?: string
-  }
+    chatRoomID?: string,
+    currentUserID?: string
+    
+  },
+  chatMessageArray: messageArray[]
 }
 
 const ChatRoomComponent: React.FC<chatRoomData> = (props) => {
 
-  const { chatRoom } = props;
-  // console.log('hello',chatRoom.chatRoomID)
-  const chatRoomID = chatRoom?.chatRoomID
-  const recipientName = chatRoom.recipientName
+  const { chatRoom, chatMessageArray } = props;
+  const { chatRoomID, recipientName, recipientID, currentUserID } = chatRoom
+
   const socket = useContext(WebsocketContext);
-  const [message, setMessage] = useState<messagePyload[]>([])
-  // console.log(message,"messages") 
-  const [value, setValue] = useState('');
+
+  const [message, setMessage] = useState<messageArray[]>(chatMessageArray)
+  const [value, setValue] = useState<string>('');
 
   useEffect(() => {
+    setMessage(chatMessageArray)
     socket.on('connect', () => {
-      console.log('connection from chatroom')
       console.log('Connected');
     })
 
@@ -37,8 +42,7 @@ const ChatRoomComponent: React.FC<chatRoomData> = (props) => {
 
     socket.on(sucscribedChatRoom, (newMessage: messagePyload) => {
       console.log('chat room component recieved');
-      console.log(newMessage);
-      setMessage((prev) => [...prev, newMessage])
+      setMessage(newMessage.messageArray)
     });
 
     return () => {
@@ -49,10 +53,15 @@ const ChatRoomComponent: React.FC<chatRoomData> = (props) => {
     }
   }, [chatRoomID])
 
-  const handleSubmit = (e:FormEvent) => {
-      e.preventDefault()
-      socket.emit('newChatRoom', { value, chatRoomID });
-      setValue('');
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    const message = {
+      value,
+      recipientID,
+      senderID: currentUserID
+    }
+    socket.emit('newChatRoom', { message, chatRoomID });
+    setValue('');
   }
 
   return (
@@ -76,13 +85,23 @@ const ChatRoomComponent: React.FC<chatRoomData> = (props) => {
 
         {message.length === 0 ? <div className='noMessage'>
 
-          No Message 
+          No Message
 
         </div> : <div>
           {message.map((msg, index) =>
 
             <div key={index}>
-              <p>{msg.content}</p>
+
+              {msg.senderID === currentUserID ? <div className='leftMessage'>
+
+                <p>{msg.value}</p>
+
+              </div> : <div className='rightMessage'>
+
+                <p>{msg.value}</p>
+
+              </div>}
+
             </div>
 
           )}
@@ -92,11 +111,14 @@ const ChatRoomComponent: React.FC<chatRoomData> = (props) => {
 
       <form className='inputBar'>
         <i className="fa-solid fa-microphone-lines"></i>
-        <input onKeyDown={handleSubmit} placeholder='Write Something' type="text" value={value} onChange={(e) => setValue(e.target.value)} />
+        <input placeholder='Write Something' type="text" value={value} onChange={(e) => {
+          console.log("askdasb");
+          setValue(e.target.value)
+        }} />
         <i className="fa-solid fa-paperclip"></i>
         <i className="fa-solid fa-camera"></i>
         <i className="fa-regular fa-face-smile"></i>
-        <button onClick={handleSubmit}><i style={{color:'white'}} className="fa-solid fa-paper-plane"></i></button>
+        <button onClick={handleSubmit}><i style={{ color: 'white' }} className="fa-solid fa-paper-plane"></i></button>
       </form>
     </div>
   )

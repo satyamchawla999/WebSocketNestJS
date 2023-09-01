@@ -1,5 +1,6 @@
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from "socket.io"
+import { GatewayService } from './gateway.service';
 
 @WebSocketGateway({
   cors: {
@@ -7,6 +8,8 @@ import { Server } from "socket.io"
   }
 })
 export class MyGateway {
+
+  constructor(private readonly gatewayService: GatewayService) {}
   
   @WebSocketServer()
   server: Server
@@ -18,30 +21,29 @@ export class MyGateway {
     })
   }
 
-  @SubscribeMessage("newMessage")
-  onNewMessage(@MessageBody() body: any){
-    console.log(body)
-    this.server.emit('onMessage',{
-      msg:'new message',
-      content: body
-    })
-  }
+  // @SubscribeMessage("newMessage")
+  // onNewMessage(@MessageBody() body: any){
+  //   console.log(body)
+  //   this.server.emit('onMessage',{
+  //     msg:'new message',
+  //     content: body
+  //   })
+  // }
 
-  @SubscribeMessage("newUser")
-  onNewUser(@MessageBody() body: any){
-    console.log("new user",body)
-    this.server.emit('onNewUser',{
-      user: body
-    })
-  }
+  // @SubscribeMessage("newUser")
+  // onNewUser(@MessageBody() body: any){
+  //   console.log("new user",body)
+  //   this.server.emit('onNewUser',{
+  //     user: body
+  //   })
+  // }
 
   @SubscribeMessage('newChatRoom')
-  onNewRoom(@MessageBody() body: any){
-    console.log('hello hello hello')
+  async onNewRoom(@MessageBody() body: any){
+    const messageArray = await this.gatewayService.redisStorage(body)
     const SubscribeChatRoom = `${body.chatRoomID}SUBSCRIBE`
     this.server.emit(SubscribeChatRoom,{
-      msg:'new message',
-      content: body.value
+      messageArray
     })
   }
 }

@@ -8,7 +8,6 @@ import userReducer from '../features/users/usersSlice'
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['select']
 }
 
 const reducer = combineReducers({
